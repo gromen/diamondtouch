@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/* Dark is default; the `light` class (or no-preference fallback) flips variables.
+   We use the `class` strategy so the ThemeToggle can persist user choice. */
+@custom-variant light (&:where(.light, .light *));
+
+@theme {
+  /* Brand */
+  --color-brand-50: #fdf7ef;
+  --color-brand-100: #f8e8cf;
+  --color-brand-200: #f1d29f;
+  --color-brand-300: #e6b466;
+  --color-brand-400: #d99a3e;
+  --color-brand-500: #c47d1f;
+  --color-brand-600: #a26418;
+  --color-brand-700: #7d4c13;
+  --color-brand-800: #55330c;
+  --color-brand-900: #2e1b06;
+
+  /* Semantic (dark by default) */
+  --color-bg: #0b0b0c;
+  --color-bg-elevated: #141416;
+  --color-fg: #f5f5f4;
+  --color-fg-muted: #a1a1aa;
+  --color-border: #27272a;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+}
+
+/* Light theme override */
+:where(.light) {
+  --color-bg: #fafaf9;
+  --color-bg-elevated: #ffffff;
+  --color-fg: #18181b;
+  --color-fg-muted: #52525b;
+  --color-border: #e4e4e7;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+
+    &.light {
+      color-scheme: light;
+    }
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: var(--color-brand-400);
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+
+    @media (min-width: 768px) {
+      padding-inline: 2rem;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: transform 150ms ease, background-color 150ms ease;
+    border: 1px solid var(--color-border);
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &.btn-primary {
+      background-color: var(--color-brand-500);
+      color: #fff;
+      border-color: var(--color-brand-500);
+
+      &:hover {
+        background-color: var(--color-brand-400);
+      }
+    }
+  }
+}

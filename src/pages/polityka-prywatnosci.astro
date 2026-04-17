@@ -1,0 +1,34 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import { site } from '~/lib/site';
+---
+
+<Layout title="Polityka prywatności">
+  <section class="container-page pt-12 pb-16 prose-invert max-w-3xl">
+    <h1 class="text-4xl md:text-5xl font-display">Polityka prywatności</h1>
+    <p class="mt-4 text-[var(--color-fg-muted)]">
+      Dokument opisuje zasady przetwarzania danych osobowych oraz wykorzystania plików cookie
+      w serwisie {site.url}.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-display">Administrator danych</h2>
+    <p class="mt-2 text-[var(--color-fg-muted)]">
+      Administratorem danych jest {site.name}, {site.map.address}.
+      Kontakt: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+    </p>
+
+    <h2 class="mt-8 text-2xl font-display">Pliki cookie i analityka</h2>
+    <p class="mt-2 text-[var(--color-fg-muted)]">
+      Korzystamy z Google Analytics 4 za pośrednictwem Google Tag Managera wyłącznie po
+      wyrażeniu zgody w banerze cookies. Do tego czasu analityka jest wyłączona (Consent Mode v2,
+      domyślnie „denied”). Zgodę można w każdej chwili wycofać, czyszcząc dane strony w przeglądarce.
+    </p>
+
+    <h2 class="mt-8 text-2xl font-display">Twoje prawa</h2>
+    <p class="mt-2 text-[var(--color-fg-muted)]">
+      Masz prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania,
+      przenoszenia oraz sprzeciwu. W sprawach prywatności pisz na
+      <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+    </p>
+  </section>
+</Layout>

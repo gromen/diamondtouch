@@ -1,0 +1,55 @@
+---
+// Minimal consent banner. Persists choice in localStorage under "cookie-consent".
+// When user accepts, updates Google Consent Mode (v2) to granted for analytics.
+---
+
+<div
+  id="cookie-bar"
+  role="dialog"
+  aria-live="polite"
+  aria-label="Zgoda na pliki cookie"
+  class="fixed inset-x-3 bottom-3 z-50 hidden rounded-2xl border border-border bg-[color-mix(in_oklab,var(--color-bg-elevated)_80%,transparent)] p-4 shadow-lg md:inset-x-auto md:right-4 md:bottom-4 md:max-w-md"
+>
+  <p class="text-sm text-[color-mix(in_oklab,var(--color-fg)_80%,transparent)]">
+    Używamy plików cookie do analityki (Google Analytics). Możesz zaakceptować lub odrzucić.
+    Szczegóły w <a href="/polityka-prywatnosci" class="underline">polityce prywatności</a>.
+  </p>
+  <div class="mt-3 flex flex-wrap gap-2">
+    <button type="button" data-cookie="accept" class="btn btn-primary text-sm">Akceptuję</button>
+    <button type="button" data-cookie="reject" class="btn text-sm">Odrzuć</button>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const KEY = 'cookie-consent';
+    const bar = document.getElementById('cookie-bar');
+    if (!bar) return;
+
+    const existing = (() => { try { return localStorage.getItem(KEY); } catch { return null; } })();
+    if (!existing) bar.classList.remove('hidden');
+
+    function apply(choice) {
+      try { localStorage.setItem(KEY, choice); } catch {}
+      bar.classList.add('hidden');
+      if (typeof window.gtag === 'function') {
+        const granted = choice === 'accept';
+        window.gtag('consent', 'update', {
+          ad_storage: granted ? 'granted' : 'denied',
+          ad_user_data: granted ? 'granted' : 'denied',
+          ad_personalization: granted ? 'granted' : 'denied',
+          analytics_storage: granted ? 'granted' : 'denied',
+        });
+      }
+    }
+
+    // Re-apply on page load if already accepted.
+    if (existing === 'accept') {
+      apply('accept');
+    }
+
+    bar.querySelectorAll('[data-cookie]').forEach((btn) => {
+      btn.addEventListener('click', () => apply(btn.getAttribute('data-cookie')));
+    });
+  })();
+</script>
