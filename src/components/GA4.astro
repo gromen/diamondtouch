@@ -15,7 +15,7 @@ const enabled = import.meta.env.PROD && !!gtmId;
       (function () {
         // Block on localhost/127.* to avoid polluting analytics during local testing.
         const host = location.hostname;
-        if (host === 'localhost' || host === '127.0.0.1' || host.endsWith('.local')) {
+        if (host.includes('localhost') || host.includes('127.0.0.1') || host.endsWith('.local')) {
           window.__GTM_DISABLED__ = true;
           return;
         }
@@ -41,7 +41,7 @@ const enabled = import.meta.env.PROD && !!gtmId;
           j = d.createElement(s),
           dl = l != 'dataLayer' ? '&l=' + l : '';
         j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtag/js?id=' + i + dl;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
         f.parentNode.insertBefore(j, f);
       })(window, document, 'script', 'dataLayer', gtmId);
     </script>
