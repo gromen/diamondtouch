@@ -1,4 +1,5 @@
 ---
+import SocialLinks from '~/components/SocialLinks.astro';
 import { site } from '~/lib/site';
 const year = new Date().getFullYear();
 ---
@@ -8,10 +9,10 @@ const year = new Date().getFullYear();
     <div>
       <p class="font-display text-fg text-lg">{site.name}</p>
       <p class="mt-2">{site.contact.hours}</p>
+      <SocialLinks class="mt-4" showHandle />
     </div>
     <div>
       <p>{site.map.address}</p>
-      <p><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>
       <p><a href={`tel:${site.contact.phone.replace(/\s/g, '')}`}>{site.contact.phone}</a></p>
     </div>
     <div class="md:text-right">
