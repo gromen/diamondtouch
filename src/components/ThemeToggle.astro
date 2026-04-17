@@ -1,12 +1,13 @@
 ---
 // Accessible dark/light toggle. Dark is default; saved choice overrides.
+// Rendered in multiple places (desktop + mobile), so uses class + querySelectorAll
+// instead of id to avoid duplicate-id issues.
 ---
 
 <button
-  id="theme-toggle"
   type="button"
   aria-label="Przełącz motyw"
-  class="ml-1 p-2 rounded-full border border-border hover:bg-bg-elevated transition-colors"
+  class="theme-toggle ml-1 p-2 rounded-full border border-border hover:bg-bg-elevated transition-colors"
 >
   <svg class="w-4 h-4 hidden [html:not(.light)_&]:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <circle cx="12" cy="12" r="4" />
@@ -19,14 +20,16 @@
 
 <script is:inline>
   (function () {
-    const btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      const root = document.documentElement;
-      const isLight = root.classList.toggle('light');
-      try {
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
-      } catch (_) {}
+    document.querySelectorAll('.theme-toggle').forEach((btn) => {
+      if (btn.dataset.themeBound) return;
+      btn.dataset.themeBound = '1';
+      btn.addEventListener('click', () => {
+        const root = document.documentElement;
+        const isLight = root.classList.toggle('light');
+        try {
+          localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        } catch (_) {}
+      });
     });
   })();
 </script>
