@@ -116,6 +116,13 @@
     transform: scale(0) rotate(0deg);
     animation: twinkle 2.6s ease-in-out infinite;
 
+    :where(.light) & {
+      color: color-mix(in oklab, var(--color-brand-900) 80%, black);
+      filter: drop-shadow(
+        0 0 4px color-mix(in oklab, var(--color-brand-500) 45%, transparent)
+      );
+    }
+
     @media (prefers-reduced-motion: reduce) {
       display: none;
     }
