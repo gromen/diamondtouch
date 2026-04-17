@@ -105,6 +105,34 @@
     }
   }
 
+  .sparkle {
+    position: absolute;
+    pointer-events: none;
+    color: color-mix(in oklab, var(--color-brand-200) 85%, white);
+    filter: drop-shadow(
+      0 0 6px color-mix(in oklab, var(--color-brand-300) 60%, transparent)
+    );
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+    animation: twinkle 2.6s ease-in-out infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      display: none;
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1) rotate(180deg);
+    }
+  }
+
   .container-page {
     width: 100%;
     max-width: 72rem;
