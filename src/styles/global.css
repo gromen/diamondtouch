@@ -6,20 +6,20 @@
 
 @theme {
   /* Brand */
-  --color-brand-50: #fdf7ef;
-  --color-brand-100: #f8e8cf;
-  --color-brand-200: #f1d29f;
-  --color-brand-300: #e6b466;
-  --color-brand-400: #d99a3e;
-  --color-brand-500: #c47d1f;
-  --color-brand-600: #a26418;
-  --color-brand-700: #7d4c13;
-  --color-brand-800: #55330c;
-  --color-brand-900: #2e1b06;
+  --color-brand-50: #f0f9fc;
+  --color-brand-100: #c9eaf5;
+  --color-brand-200: #8dd1ea;
+  --color-brand-300: #4db8de;
+  --color-brand-400: #2ba8d3;
+  --color-brand-500: #2596be;
+  --color-brand-600: #1d7498;
+  --color-brand-700: #165671;
+  --color-brand-800: #0e3849;
+  --color-brand-900: #071e28;
 
   /* Semantic (dark by default) */
-  --color-bg: #0b0b0c;
-  --color-bg-elevated: #141416;
+  --color-bg: #030303;
+  --color-bg-elevated: #0a0a0b;
   --color-fg: #f5f5f4;
   --color-fg-muted: #a1a1aa;
   --color-border: #27272a;

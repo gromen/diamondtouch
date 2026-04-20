@@ -1,0 +1,91 @@
+---
+---
+
+<button
+  type="button"
+  aria-label="Efekt kursora"
+  class="cursor-toggle ml-1 p-2 rounded-full border border-border hover:bg-bg-elevated transition-colors relative"
+  data-cursor-on="true"
+>
+  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 2C12 2 5 10 5 15a7 7 0 0 0 14 0c0-5-7-13-7-13z" />
+    <path class="ripple-arc" d="M8.5 20.5 Q12 22.5 15.5 20.5" opacity="0.5" />
+  </svg>
+  <span class="cursor-ring" aria-hidden="true"></span>
+</button>
+
+<style>
+  .cursor-toggle {
+    color: var(--color-fg-muted);
+
+    &[data-cursor-on="true"] {
+      color: #2596be;
+      border-color: color-mix(in oklab, #2596be 50%, transparent);
+    }
+
+    .cursor-ring {
+      position: absolute;
+      inset: -3px;
+      border-radius: 9999px;
+      border: 1.5px solid #2596be;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &[data-cursor-on="true"] .cursor-ring {
+      animation: cursor-ring-pulse 2.4s ease-out infinite;
+    }
+  }
+
+  @keyframes cursor-ring-pulse {
+    0% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function initCursorToggle() {
+      const canvas = document.getElementById('fluid');
+      const saved = localStorage.getItem('cursor-effect');
+      const isOn = saved !== 'off';
+
+      if (canvas) canvas.style.display = isOn ? 'block' : 'none';
+
+      document.querySelectorAll('.cursor-toggle').forEach(function (btn) {
+        if (btn.dataset.cursorBound) return;
+        btn.dataset.cursorBound = '1';
+        btn.dataset.cursorOn = String(isOn);
+
+        btn.addEventListener('click', function () {
+          const nowOn = btn.dataset.cursorOn !== 'true';
+          try {
+            localStorage.setItem('cursor-effect', nowOn ? 'on' : 'off');
+          } catch (_) {}
+          if (nowOn) {
+            // WebGL needs a visible canvas on init — reload required
+            window.location.reload();
+          } else {
+            // Hiding works without reload
+            if (canvas) canvas.style.display = 'none';
+            document.querySelectorAll('.cursor-toggle').forEach(function (b) {
+              b.dataset.cursorOn = 'false';
+            });
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCursorToggle);
+    } else {
+      initCursorToggle();
+    }
+  })();
+</script>

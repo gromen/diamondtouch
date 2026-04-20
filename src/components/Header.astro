@@ -1,9 +1,11 @@
 ---
 import { Image } from 'astro:assets';
-import logo from '~/assets/logo/logo.jpeg';
-import { site } from '~/lib/site';
-import ThemeToggle from '~/components/ThemeToggle.astro';
+import logoWhite from '~/assets/logo/logo-white.png';
+import logo from '~/assets/logo/logo.jpg';
+import CursorToggle from '~/components/CursorToggle.astro';
 import MobileMenu from '~/components/MobileMenu.astro';
+import ThemeToggle from '~/components/ThemeToggle.astro';
+import { site } from '~/lib/site';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
@@ -14,8 +16,8 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 >
   <div class="container-page flex items-center justify-between py-3">
     <a href="/" class="flex items-center gap-3" aria-label={`${site.name} — strona główna`}>
-      <Image src={logo} alt={site.name} width={40} height={40} class="rounded-full object-cover" />
-      <span class="font-display text-lg tracking-wide hidden sm:block">{site.name}</span>
+      <Image src={logo} alt={site.name} width={70} height={70} class="rounded-full object-cover light:hidden" />
+      <Image src={logoWhite} alt={site.name} width={70} height={70} class="hidden rounded-full object-cover light:block" />
     </a>
 
     <nav aria-label="Główna nawigacja" class="hidden md:flex items-center gap-1 md:gap-2">
@@ -34,6 +36,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
           </a>
         );
       })}
+      <CursorToggle />
       <ThemeToggle />
     </nav>
 
