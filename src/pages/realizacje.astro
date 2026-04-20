@@ -13,7 +13,7 @@ const images = Object.entries(modules)
   .sort((a, b) => a.path.localeCompare(b.path, undefined, { numeric: true }));
 ---
 
-<Layout title="Realizacje" description="Galeria zrealizowanych prac Diamond Touch Studio.">
+<Layout title="Realizacje" description="Galeria realizacji Diamond Touch Studio — powłoki ceramiczne, korekta lakieru, folie PPF. Detailing samochodowy Ostrów Mazowiecka.">
   <section class="container-page pt-12 pb-16">
     <header class="max-w-2xl">
       <p class="text-brand-400 uppercase tracking-[0.2em] text-xs">Portfolio</p>
@@ -29,7 +29,7 @@ const images = Object.entries(modules)
         <figure class="group relative overflow-hidden rounded-2xl bg-elevated-bg">
           <Image
             src={src}
-            alt={`Realizacja ${i + 1}`}
+            alt={`Detailing samochodowy — realizacja ${i + 1} Diamond Touch Studio Ostrów Mazowiecka`}
             widths={[320, 480, 768]}
             sizes="(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 45vw"
             loading={i < 4 ? 'eager' : 'lazy'}

@@ -4,7 +4,7 @@ export const site = {
   domain: "diamondtouch.pl",
   url: "https://diamondtouch.pl",
   description:
-    "Diamond Touch Studio — profesjonalne studio oferujące usługi najwyższej jakości. Zobacz nasze realizacje i skontaktuj się z nami.",
+    "Diamond Touch Studio — profesjonalny detailing samochodowy w Ostrowie Mazowieckiej. Powłoki ceramiczne, korekta lakieru, folie ochronne PPF. Umów wizytę już dziś.",
   locale: "pl-PL",
   // Google Tag Manager container id — set via PUBLIC_GTM_ID env var for production.
   gtmId: import.meta.env.PUBLIC_GTM_ID ?? "",

@@ -1,11 +1,11 @@
 ---
-import '~/styles/global.css';
-import Header from '~/components/Header.astro';
-import Footer from '~/components/Footer.astro';
-import CookieBar from '~/components/CookieBar.astro';
-import GA4 from '~/components/GA4.astro';
-import SplashCursor from '~/components/SplashCursor.astro';
-import { site } from '~/lib/site';
+import "~/styles/global.css";
+import Header from "~/components/Header.astro";
+import Footer from "~/components/Footer.astro";
+import CookieBar from "~/components/CookieBar.astro";
+import GA4 from "~/components/GA4.astro";
+import SplashCursor from "~/components/SplashCursor.astro";
+import { site } from "~/lib/site";
 
 interface Props {
   title?: string;
@@ -13,8 +13,13 @@ interface Props {
   image?: string;
 }
 
-const { title, description = site.description, image = '/og-image.jpg' } = Astro.props;
-const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — Portfolio`;
+const {
+  title,
+  description = site.description,
+  image = "/og.png",
+} = Astro.props;
+const pageTitle =
+  title ? `${title} · ${site.name}` : `${site.name} — Portfolio`;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
 ---
 
@@ -27,7 +32,8 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="apple-touch-icon" href="/favicon.jpg" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -43,18 +49,44 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     <script is:inline>
       (function () {
         try {
-          const saved = localStorage.getItem('theme');
-          if (saved === 'light') {
-            document.documentElement.classList.add('light');
+          const saved = localStorage.getItem("theme");
+          if (saved === "light") {
+            document.documentElement.classList.add("light");
           }
         } catch (_) {}
       })();
     </script>
 
     <GA4 />
+
+    <!-- Structured Data: Local Business -->
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "AutoBodyShop",
+        name: site.name,
+        url: site.url,
+        telephone: site.contact.phone,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "ul. Kacza 2",
+          addressLocality: "Ostrów Mazowiecka",
+          postalCode: "07-300",
+          addressCountry: "PL",
+        },
+        openingHours: "Mo-Fr 09:00-19:00",
+        image: `${site.url}/og-image.jpg`,
+        sameAs: site.social.map((s) => s.href),
+      })}
+    />
   </head>
   <body>
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-bg-elevated focus:text-fg focus:px-3 focus:py-2 focus:rounded">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-bg-elevated focus:text-fg focus:px-3 focus:py-2 focus:rounded"
+    >
       Przejdź do treści
     </a>
     <Header />

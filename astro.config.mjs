@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://diamondtouch.pl',
-  trailingSlash: 'ignore',
+  trailingSlash: 'never',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
