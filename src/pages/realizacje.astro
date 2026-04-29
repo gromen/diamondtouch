@@ -1,6 +1,7 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Layout from '~/layouts/Layout.astro';
+import Lightbox from '~/components/Lightbox.astro';
 
 // Eagerly glob all portfolio images so Astro can optimize them at build time.
 const modules = import.meta.glob<{ default: ImageMetadata }>(
@@ -8,9 +9,23 @@ const modules = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true }
 );
 
-const images = Object.entries(modules)
+const sorted = Object.entries(modules)
   .map(([path, mod]) => ({ path, src: mod.default }))
   .sort((a, b) => a.path.localeCompare(b.path, undefined, { numeric: true }));
+
+const items = await Promise.all(
+  sorted.map(async ({ path, src }) => {
+    const targetWidths = [800, 1280, 1920, 2560].filter((w) => w <= src.width);
+    const widths = targetWidths.length ? targetWidths : [800];
+    const full = await getImage({
+      src,
+      widths,
+      format: 'webp',
+      quality: 82,
+    });
+    return { path, src, full };
+  })
+);
 ---
 
 <Layout title="Realizacje" description="Galeria realizacji Diamond Touch Studio — powłoki ceramiczne, korekta lakieru, folie PPF. Detailing samochodowy Ostrów Mazowiecka.">
@@ -24,19 +39,34 @@ const images = Object.entries(modules)
       </p>
     </header>
 
-    <div class="mt-10 grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {images.map(({ src }, i) => (
-        <figure class="group relative overflow-hidden rounded-2xl bg-elevated-bg">
-          <Image
-            src={src}
-            alt={`Detailing samochodowy — realizacja ${i + 1} Diamond Touch Studio Ostrów Mazowiecka`}
-            widths={[320, 480, 768]}
-            sizes="(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 45vw"
-            loading={i < 4 ? 'eager' : 'lazy'}
-            class="aspect-4/5 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        </figure>
-      ))}
-    </div>
+    <ul class="mt-10 grid gap-3 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 list-none p-0">
+      {items.map(({ src, full }, i) => {
+        const alt = `Detailing samochodowy — realizacja ${i + 1} Diamond Touch Studio Ostrów Mazowiecka`;
+        return (
+          <li>
+            <button
+              type="button"
+              class="group relative block w-full overflow-hidden rounded-2xl bg-elevated-bg cursor-zoom-in"
+              data-lightbox-trigger
+              data-src={full.src}
+              data-srcset={full.srcSet.attribute}
+              data-alt={alt}
+              aria-label={`Otwórz pełny widok: zdjęcie ${i + 1} z ${items.length}`}
+            >
+              <Image
+                src={src}
+                alt={alt}
+                widths={[320, 480, 768]}
+                sizes="(min-width: 1024px) 22vw, (min-width: 768px) 30vw, 45vw"
+                loading={i < 4 ? 'eager' : 'lazy'}
+                class="aspect-4/5 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+            </button>
+          </li>
+        );
+      })}
+    </ul>
   </section>
+
+  <Lightbox />
 </Layout>
