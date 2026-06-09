@@ -4,8 +4,10 @@ export const site = {
   domain: "diamondtouch.pl",
   url: "https://diamondtouch.pl",
   description:
-    "Diamond Touch Studio — profesjonalny detailing samochodowy w Ostrowi Mazowieckiej. Powłoki ceramiczne, korekta lakieru, folie ochronne PPF. Umów wizytę już dziś.",
+    "Diamond Touch Studio — przyciemnianie szyb, folia kameleon i detailing wnętrza w Ostrowi Mazowieckiej. Profesjonalne oklejanie folią, PPF, dechroming. Zadzwoń i umów wizytę.",
   locale: "pl-PL",
+  gbpUrl: "",
+  coordinates: { lat: 52.8004, lng: 21.8985 },
   // Google Tag Manager container id — set via PUBLIC_GTM_ID env var for production.
   gtmId: import.meta.env.PUBLIC_GTM_ID ?? "",
   // Google Maps – latitude/longitude of the salon. Update these for the real location.

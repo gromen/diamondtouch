@@ -18,6 +18,7 @@ const { class: className = '', showHandle = false } = Astro.props;
         rel="noopener noreferrer"
         aria-label={`${item.name} — ${item.handle}`}
         class="inline-flex items-center gap-2 hover:text-fg transition-colors"
+        data-track={JSON.stringify({ event: 'click_social', platform: item.name })}
       >
         {item.name === 'Instagram' && (
           <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

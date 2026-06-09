@@ -22,7 +22,7 @@ import { site } from '~/lib/site';
           <dl class="mt-4 grid gap-3 text-sm">
             <div class="flex justify-between gap-4">
               <dt class="text-fg-muted">Telefon</dt>
-              <dd><a href={`tel:${site.contact.phone.replace(/\s/g, '')}`}>{site.contact.phone}</a></dd>
+              <dd><a href={`tel:${site.contact.phone.replace(/\s/g, '')}`} data-track='{"event":"click_phone","location":"contact"}'>{site.contact.phone}</a></dd>
             </div>
             <div class="flex justify-between gap-4">
               <dt class="text-fg-muted">Adres</dt>
@@ -34,7 +34,7 @@ import { site } from '~/lib/site';
             </div>
           </dl>
           <div class="mt-6 flex flex-wrap gap-2">
-            <a href={`tel:${site.contact.phone.replace(/\s/g, '')}`} class="btn btn-primary">Zadzwoń</a>
+            <a href={`tel:${site.contact.phone.replace(/\s/g, '')}`} class="btn btn-primary" data-track='{"event":"click_phone","location":"contact_cta"}'>Zadzwoń</a>
           </div>
         </div>
 

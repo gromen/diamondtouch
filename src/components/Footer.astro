@@ -14,7 +14,9 @@ const year = new Date().getFullYear();
     <div>
       <p>{site.map.address}</p>
       <p>
-        <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
+        <a
+          href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
+          data-track='{"event":"click_phone","location":"footer"}'
           >{site.contact.phone}</a
         >
       </p>

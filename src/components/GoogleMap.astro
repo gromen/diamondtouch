@@ -17,7 +17,7 @@ const {
 const src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 ---
 
-<div class="overflow-hidden rounded-2xl border border-border">
+<div class="overflow-hidden rounded-2xl border border-border" data-gtm-map>
   <iframe
     src={src}
     title={title}
