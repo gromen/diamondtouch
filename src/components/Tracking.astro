@@ -1,0 +1,31 @@
+---
+// Pushes interaction events to GTM dataLayer.
+// Events are always pushed regardless of consent — GTM handles consent-gating on the tag level.
+// Tracked events:
+//   click_phone   — element with data-track={"event":"click_phone","location":"..."}
+//   click_social  — element with data-track={"event":"click_social","platform":"..."}
+//   click_cta     — element with data-track={"event":"click_cta","label":"...","page":"..."}
+//   click_map     — Google Maps iframe engagement (window blur → iframe active)
+---
+
+<script is:inline>
+  (function () {
+    window.dataLayer = window.dataLayer || [];
+
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest('[data-track]');
+      if (!el) return;
+      try {
+        var payload = JSON.parse(el.getAttribute('data-track'));
+        window.dataLayer.push(payload);
+      } catch (_) {}
+    });
+
+    window.addEventListener('blur', function () {
+      var active = document.activeElement;
+      if (active && active.tagName === 'IFRAME' && active.closest('[data-gtm-map]')) {
+        window.dataLayer.push({ event: 'click_map' });
+      }
+    });
+  })();
+</script>
