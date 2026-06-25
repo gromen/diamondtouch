@@ -23,6 +23,11 @@ export const site = {
   },
   social: [
     {
+      name: "Facebook",
+      handle: "@diamondtouchstdio",
+      href: "https://www.facebook.com/diamondtouchstdio/",
+    },
+    {
       name: "Instagram",
       handle: "@diamond_touch_studio",
       href: "https://www.instagram.com/diamond_touch_studio/",
