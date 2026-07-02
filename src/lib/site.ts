@@ -10,6 +10,8 @@ export const site = {
   coordinates: { lat: 52.8004, lng: 21.8985 },
   // Google Tag Manager container id — set via PUBLIC_GTM_ID env var for production.
   gtmId: import.meta.env.PUBLIC_GTM_ID ?? "",
+  // Meta Pixel id — set via PUBLIC_META_PIXEL_ID env var for production.
+  metaPixelId: import.meta.env.PUBLIC_META_PIXEL_ID ?? "1696345799163422",
   // Google Maps – latitude/longitude of the salon. Update these for the real location.
   map: {
     label: "Diamond Touch Studio",

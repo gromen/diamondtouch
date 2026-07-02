@@ -1,3 +1,6 @@
 # Google Tag Manager container ID (only used in production build).
 # Leave empty on localhost — tracking is disabled there regardless.
 PUBLIC_GTM_ID=GTM-XXXXXXX
+
+# Meta Pixel id (only used in production build).
+PUBLIC_META_PIXEL_ID=1696345799163422

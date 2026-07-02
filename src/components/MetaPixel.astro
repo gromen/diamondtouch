@@ -1,0 +1,74 @@
+---
+// Meta Pixel — loads only in production, respects cookie consent (revoke until accept).
+// Do not add a duplicate Meta Pixel tag in GTM when this component is active.
+import { site } from "~/lib/site";
+
+const pixelId = site.metaPixelId;
+const enabled = import.meta.env.PROD && !!pixelId;
+---
+
+{
+  enabled && (
+    <>
+      <script is:inline define:vars={{ pixelId }}>
+        (function () {
+          var host = location.hostname;
+          if (
+            host.includes("localhost") ||
+            host.includes("127.0.0.1") ||
+            host.endsWith(".local")
+          ) {
+            window.__META_PIXEL_DISABLED__ = true;
+            return;
+          }
+
+          !(function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+              n.callMethod
+                ? n.callMethod.apply(n, arguments)
+                : n.queue.push(arguments);
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = "2.0";
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s);
+          })(
+            window,
+            document,
+            "script",
+            "https://connect.facebook.net/en_US/fbevents.js",
+          );
+
+          fbq("consent", "revoke");
+          fbq("init", pixelId);
+          window.__metaPixelGranted__ = false;
+
+          window.updateMetaPixelConsent = function (granted) {
+            window.__metaPixelGranted__ = granted;
+            if (typeof fbq !== "function") return;
+            fbq("consent", granted ? "grant" : "revoke");
+            if (granted) {
+              fbq("track", "PageView");
+            }
+          };
+        })();
+      </script>
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style="display:none"
+          src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+          alt=""
+        />
+      </noscript>
+    </>
+  )
+}

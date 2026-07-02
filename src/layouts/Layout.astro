@@ -4,6 +4,7 @@ import Header from "~/components/Header.astro";
 import Footer from "~/components/Footer.astro";
 import CookieBar from "~/components/CookieBar.astro";
 import GA4 from "~/components/GA4.astro";
+import MetaPixel from "~/components/MetaPixel.astro";
 import SplashCursor from "~/components/SplashCursor.astro";
 import Tracking from "~/components/Tracking.astro";
 import { site } from "~/lib/site";
@@ -60,6 +61,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     </script>
 
     <GA4 />
+    <MetaPixel />
 
     <!-- Structured Data: Local Business -->
     <script
