@@ -1,0 +1,141 @@
+---
+import { Image } from "astro:assets";
+import Layout from "~/layouts/Layout.astro";
+import { areaServedText, type Service } from "~/lib/services";
+import { site } from "~/lib/site";
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const phoneHref = `tel:${site.contact.phone.replace(/\s/g, "")}`;
+const pageUrl = `${site.url}/uslugi/${service.slug}`;
+const trackPrefix = service.slug.replace(/-/g, "_");
+---
+
+<Layout title={service.seoTitle} description={service.seoDescription}>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: service.schemaName,
+      description: service.schemaDescription,
+      provider: {
+        "@type": "AutoBodyShop",
+        name: site.name,
+        telephone: site.contact.phone,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "ul. Kacza 2",
+          addressLocality: "Ostrów Mazowiecka",
+          postalCode: "07-300",
+          addressCountry: "PL",
+        },
+      },
+      areaServed: [
+        { "@type": "City", name: "Ostrów Mazowiecka" },
+        { "@type": "AdministrativeArea", name: "powiat ostrowski" },
+      ],
+      url: pageUrl,
+    })}
+  />
+
+  <section class="container-page pt-12 pb-16 md:pt-16">
+    <nav class="text-sm text-fg-muted" aria-label="Breadcrumb">
+      <a href="/uslugi" class="hover:text-fg">Usługi</a>
+      <span aria-hidden="true"> / </span>
+      <span class="text-fg">{service.breadcrumb}</span>
+    </nav>
+
+    <div class="mt-6 grid gap-10 lg:grid-cols-2 lg:items-start">
+      <header class="max-w-2xl">
+        <p class="text-brand-400 uppercase tracking-[0.2em] text-xs">
+          Ostrów Mazowiecka · powiat ostrowski
+        </p>
+        <h1 class="mt-3 text-4xl md:text-5xl font-display leading-tight">
+          {service.h1}
+        </h1>
+        <p class="mt-4 text-lg text-fg-muted">{service.lead}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href={phoneHref}
+            class="btn btn-primary"
+            data-track={JSON.stringify({
+              event: "click_phone",
+              location: `${trackPrefix}_hero`,
+            })}
+          >
+            Zadzwoń — {site.contact.phone}
+          </a>
+          <a href="/realizacje" class="btn">Zobacz realizacje</a>
+        </div>
+      </header>
+
+      <figure class="overflow-hidden rounded-2xl border border-border">
+        <Image
+          src={service.image}
+          alt={service.imageAlt}
+          widths={[480, 768, 1024]}
+          sizes="(min-width: 1024px) 45vw, 100vw"
+          class="aspect-4/3 w-full object-cover"
+        />
+      </figure>
+    </div>
+
+    <div class="mt-16 grid gap-8 md:grid-cols-2">
+      <section>
+        <h2 class="text-2xl font-display">{service.benefitsTitle}</h2>
+        <ul class="mt-4 grid gap-3 text-fg-muted">
+          {service.benefits.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-display">{service.scopeTitle}</h2>
+        <ul class="mt-4 grid gap-3 text-fg-muted">
+          {service.scope.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+    </div>
+
+    <section class="mt-16 max-w-3xl">
+      <h2 class="text-2xl font-display">Okolice, które obsługujemy</h2>
+      <p class="mt-4 text-fg-muted">{areaServedText}</p>
+    </section>
+
+    <section
+      class="mt-16 rounded-2xl border border-border bg-elevated p-6 md:p-8"
+    >
+      <h2 class="text-2xl font-display">{service.ctaTitle}</h2>
+      <p class="mt-3 text-fg-muted">{service.ctaDescription}</p>
+      <p class="mt-2 text-sm text-fg-muted">{site.contact.hours}</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href={phoneHref}
+          class="btn btn-primary"
+          data-track={JSON.stringify({
+            event: "click_phone",
+            location: `${trackPrefix}_cta`,
+          })}
+        >
+          Zadzwoń
+        </a>
+        <a
+          href="/kontakt"
+          class="btn"
+          data-track={JSON.stringify({
+            event: "click_cta",
+            label: "kontakt",
+            page: trackPrefix,
+          })}
+        >
+          Kontakt i dojazd
+        </a>
+        <a href="/uslugi" class="btn">Wszystkie usługi</a>
+      </div>
+    </section>
+  </section>
+</Layout>

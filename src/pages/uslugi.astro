@@ -1,49 +1,11 @@
 ---
 import Layout from "~/layouts/Layout.astro";
-
-const services = [
-  {
-    title: "Przyciemnianie szyb",
-    description:
-      "Profesjonalna aplikacja folii o wysokiej jakości, która zwiększa komfort jazdy, chroni wnętrze przed promieniowaniem UV i nadaje autu elegancki, sportowy charakter. Dobieramy odcień idealnie dopasowany do Twoich potrzeb i przepisów.",
-    price: "",
-  },
-  {
-    title: "Folia kameleon",
-    description:
-      "Zaawansowana folia, która mieni się różnymi kolorami w zależności od kąta padania światła. Efekt zaskakuje i wyróżnia auto z tłumu, zachowując jednocześnie pełną funkcjonalność i ochronę szyb.",
-    price: "",
-  },
-  {
-    title: "Dechroming elementów",
-    description:
-      "Eliminacja chromowanych detali poprzez precyzyjne oklejenie folią w wybranym wykończeniu — najczęściej w głębokiej czerni połysk lub mat. Nowoczesny, spójny design bez ingerencji w lakier fabryczny.",
-    price: "",
-  },
-  {
-    title: "Oklejanie samochodów — zmiana koloru",
-    description:
-      "Pełna lub częściowa zmiana koloru auta wysokiej klasy foliami premium. Nowy wygląd, dodatkowa ochrona lakieru i możliwość powrotu do oryginału — wszystko z dbałością o najmniejszy detal.",
-    price: "",
-  },
-  {
-    title: "Oklejanie samochodów folią ochronną PPF",
-    description:
-      "Bezbarwna folia ochronna PPF (Paint Protection Film), która skutecznie zabezpiecza lakier przed odpryskami, zarysowaniami, owadami i czynnikami atmosferycznymi. Idealna dla osób, którym zależy na zachowaniu fabrycznego wyglądu auta przez długie lata.",
-    price: "",
-  },
-  {
-    title: "Sprzątanie wnętrza samochodu",
-    description:
-      "Kompleksowe czyszczenie wnętrza pojazdu — tapicerka, dywany, plastiki, szyby oraz szczeliny trudnodostępne. Przywracamy oryginalny wygląd i świeżość wnętrza, dbając o każdy detal.",
-    price: "",
-  },
-];
+import { services } from "~/lib/services";
 ---
 
 <Layout
   title="Usługi"
-  description="Zakres usług Diamond Touch Studio wraz z orientacyjnym cennikiem."
+  description="PPF, oklejanie folią, przyciemnianie szyb i detailing — Diamond Touch Studio, Ostrów Mazowiecka."
 >
   <section class="container-page pt-12 pb-16 md:pt-16">
     <header class="max-w-2xl">
@@ -60,17 +22,35 @@ const services = [
         services.map((s) => (
           <li class="group rounded-2xl border border-border bg-elevated p-6 transition-colors hover:border-brand-500">
             <div class="flex items-start justify-between gap-4">
-              <h2 class="text-xl font-display">{s.title}</h2>
-              <span class="shrink-0 text-sm text-brand-400">{s.price}</span>
+              <h2 class="text-xl font-display">
+                <a
+                  href={`/uslugi/${s.slug}`}
+                  class="hover:text-brand-400"
+                >
+                  {s.title}
+                </a>
+              </h2>
             </div>
-            <p class="mt-3 text-fg-muted">{s.description}</p>
+            <p class="mt-3 text-fg-muted">{s.listDescription}</p>
+            <a
+              href={`/uslugi/${s.slug}`}
+              class="mt-4 inline-block text-sm text-brand-400 hover:text-brand-300"
+            >
+              Czytaj więcej →
+            </a>
           </li>
         ))
       }
     </ul>
 
     <div class="mt-12">
-      <a href="/kontakt" class="btn btn-primary" data-track='{"event":"click_cta","label":"umow_konsultacje","page":"uslugi"}'>Umów konsultację</a>
+      <a
+        href="/kontakt"
+        class="btn btn-primary"
+        data-track='{"event":"click_cta","label":"umow_konsultacje","page":"uslugi"}'
+      >
+        Umów konsultację
+      </a>
     </div>
   </section>
 </Layout>
